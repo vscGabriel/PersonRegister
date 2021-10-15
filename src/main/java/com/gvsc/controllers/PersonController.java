@@ -50,7 +50,7 @@ public class PersonController {
 	public String createPerson(@Valid @ModelAttribute PersonModel person, BindingResult result, RedirectAttributes redirectAtt) {
 		
 		if(result.hasErrors()) {
-			return "redirect:/sign-up";
+			return "/sign-up";
 		}
 		
 		service.save(person);	

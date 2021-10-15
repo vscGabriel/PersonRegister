@@ -10,8 +10,6 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "person")
-@Getter
-@Setter
 public class PersonModel {
 
 	@Id
