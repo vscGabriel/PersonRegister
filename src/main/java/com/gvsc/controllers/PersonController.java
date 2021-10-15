@@ -5,21 +5,24 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.engine.AttributeName;
 
 import com.gvsc.models.PersonModel;
 import com.gvsc.repositories.PersonRepository;
+import com.gvsc.services.PersonService;
 
 
 @Controller("/")
 public class PersonController {
-	
+
 	@Autowired
-	private PersonRepository repo;
+	private PersonService service;
 	
 	@GetMapping("/list")
     public ModelAndView list(){
@@ -27,7 +30,7 @@ public class PersonController {
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("list");
 
-        modelAndView.addObject("people", repo.findAll());
+        modelAndView.addObject("people", service.findAll());
         
         return modelAndView;
     }
@@ -44,10 +47,17 @@ public class PersonController {
         }
 	
 	@PostMapping("/create")
-	public String createPerson(@Valid @ModelAttribute PersonModel person ) {
-		repo.save(person);	
+	public String createPerson(@Valid @ModelAttribute PersonModel person, BindingResult result, RedirectAttributes redirectAtt) {
 		
-		return "redirect:list";
+		if(result.hasErrors()) {
+			return "redirect:/sign-up";
+		}
+		
+		service.save(person);	
+		
+		redirectAtt.addFlashAttribute("message", "Success create person.");
+		
+		return "redirect:/list";
 		
 	}
 
