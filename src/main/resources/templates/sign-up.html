@@ -1,0 +1,34 @@
+</html><!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+
+    <h1>Sign up</h1>
+
+    <form th:action="@{/create}" th:object="${people}" method="post">
+        <input type="text" name="name"     th:field="*{name}"     th:placeholder="Name"/> <br/>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+        <br/>
+
+        <input type="text" name="cpf" th:field="*{cpf}" th:placeholder="CPF"/> <br/>
+        <span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}">CPF Error</span>
+        <br/>
+       
+        <input type="text" name="cellphone" th:field="*{cellphone}" th:placeholder="Cellphone"/> <br/>
+        <span th:if="${#fields.hasErrors('cellphone')}" th:errors="*{cellphone}">Cellphone Error</span>
+        <br/>
+        
+        <input type="text" name="address" th:field="*{address}" th:placeholder="Address"/> <br/>
+        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</span>
+        <br/>
+        <button type="submit">Create a new Person</button>
+    </form>
+    
+    <br>
+
+
+</body>
+</html>
